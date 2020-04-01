@@ -50,17 +50,13 @@ def second_problem(mass_list) -> object:
     return mass_list
 
 
-def main():
-    my_path = os.path.abspath(os.path.dirname(__file__))
-    # path = os.path.join(my_path, "input_1.csv")
-    # with open(path) as f:
-    #     masses_1 = list(csv.reader(f))
-    # first_problem(masses_1)
+my_path = os.path.abspath(os.path.dirname(__file__))
+# path = os.path.join(my_path, "input_1.csv")
+# with open(path) as f:
+#     masses_1 = list(csv.reader(f))
+# first_problem(masses_1)
 
-    path = os.path.join(my_path, "input_2.txt")
-    with open(path) as f:
-        masses_2 = list(csv.reader(f))
-    second_problem(masses_2[0])
-
-
-main()
+path = os.path.join(my_path, "input_2.txt")
+with open(path) as f:
+    masses_2 = list(csv.reader(f))
+second_problem(masses_2[0])
