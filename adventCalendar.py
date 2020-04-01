@@ -36,19 +36,17 @@ def first_problem(mass_list) -> object:
 #     return total_final_mass
 
 def second_problem(mass_list) -> object:
-    # print(mass_list)
     i = 0
-    test_mass_list = mass_list
-    print(opcode_calculator(i, mass_list))
-    return 0
-
-
-def opcode_calculator(i, mass_list) -> object:
     while i < len(mass_list):
         opcode = mass_list[i]
         if opcode == '1':
-            mass_list[i + 3] = int(mass_list[i + 1]) + int(mass_list[i + 2])
+            mass_list[int(mass_list[i + 3])] = int(mass_list[int(mass_list[i + 1])]) + int(mass_list[int(mass_list[i + 2])])
+        if opcode == '2':
+            mass_list[int(mass_list[i + 3])] = int(mass_list[int(mass_list[i + 1])]) * int(mass_list[int(mass_list[i + 2])])
+        if opcode == '99':
+            break
         i += 4
+    print(mass_list)
     return mass_list
 
 
@@ -59,7 +57,7 @@ def main():
     #     masses_1 = list(csv.reader(f))
     # first_problem(masses_1)
 
-    path = os.path.join(my_path, "input_2.csv")
+    path = os.path.join(my_path, "input_2.txt")
     with open(path) as f:
         masses_2 = list(csv.reader(f))
     second_problem(masses_2[0])
