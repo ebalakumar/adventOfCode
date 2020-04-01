@@ -43,5 +43,4 @@ print(first_problem(masses_1))
 path = os.path.join(my_path, "input_2.txt")
 with open(path) as f:
     masses_2 = list(map(int, list(csv.reader(f))[0]))
-massValue = ','.join(str(e) for e in second_problem(masses_2))
-print(massValue)
+print(second_problem(masses_2))
