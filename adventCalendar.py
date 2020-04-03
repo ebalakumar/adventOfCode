@@ -1,6 +1,7 @@
 import csv
 import math
 import os.path
+from logging import exception
 
 
 def calculate_mass(int_mass):
@@ -34,7 +35,7 @@ def second_problem(mass_list) -> object:
     return mass_list
 
 
-def third_problem(red_wire, blue_wire) -> int:
+def third_problem(red_wire, blue_wire) -> []:
     count = 0
     x = 0
     y = 0
@@ -45,11 +46,15 @@ def third_problem(red_wire, blue_wire) -> int:
     # Removing initial co-ordinates
     red_wire_path.pop(0)
     blue_wire_path.pop(0)
+    print(red_wire_path)
+    print(blue_wire_path)
     common_coordinates = common_member(red_wire_path, blue_wire_path)
     arr_common_coordinates = []
     for coordinate in common_coordinates:
-        arr_common_coordinates.append(abs(int(str(coordinate).split(',')[0]))+abs(int(str(coordinate).split(',')[1])))
-    return min(arr_common_coordinates)
+        arr_common_coordinates.append(abs(int(str(coordinate).split(',')[0])) + abs(int(str(coordinate).split(',')[1])))
+    lowest_intersection_steps = find_minimum_step(common_coordinates, red_wire_path, blue_wire_path)
+    lowest_intersection = min(arr_common_coordinates)
+    return [lowest_intersection, lowest_intersection_steps]
 
 
 def update_path(wire, wire_path, x, y):
@@ -85,6 +90,20 @@ def common_member(a, b) -> object:
     else:
         print("No common elements")
     return common_co_ordinates
+
+
+def find_minimum_step(common_coordinates, red_wire_path, blue_wire_path) -> int:
+    wire_intersections_steps = []
+    total_steps_in_red_wire_for_intersection = 0
+    total_steps_in_blue_wire_for_intersection = 0
+    for common_coordinate in common_coordinates:
+        total_steps_in_red_wire_for_intersection = len(red_wire_path) - 1 - red_wire_path[::-1].index(
+            common_coordinate) + 1
+        total_steps_in_blue_wire_for_intersection = len(blue_wire_path) - 1 - blue_wire_path[::-1].index(
+            common_coordinate) + 1
+        wire_intersections_steps.append(
+            total_steps_in_red_wire_for_intersection + total_steps_in_blue_wire_for_intersection)
+    return min(wire_intersections_steps)
 
 
 my_path = os.path.abspath(os.path.dirname(__file__))

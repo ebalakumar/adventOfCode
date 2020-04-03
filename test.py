@@ -22,11 +22,25 @@ class Test1(unittest.TestCase):
         lines = open(path).read().splitlines()
         if len(lines) > 2:
             raise ValueError('More than two inputs are not accepted. Please check the input format')
-        self.assertEqual(third_problem(lines[0].split(','), lines[1].split(',')), 159)
+        self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[0], 159)
 
     def test_third_problem_2(self):
         path = os.path.join(my_path, "input_3_2.txt")
         lines = open(path).read().splitlines()
         if len(lines) > 2:
             raise ValueError('More than two inputs are not accepted. Please check the input format')
-        self.assertEqual(third_problem(lines[0].split(','), lines[1].split(',')), 135)
+        self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[0], 135)
+
+    def test_third_problem_3(self):
+        path = os.path.join(my_path, "input_3_1.txt")
+        lines = open(path).read().splitlines()
+        if len(lines) > 2:
+            raise ValueError('More than two inputs are not accepted. Please check the input format')
+        self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[1], 610)
+
+    def test_third_problem_4(self):
+        path = os.path.join(my_path, "input_3_2.txt")
+        lines = open(path).read().splitlines()
+        if len(lines) > 2:
+            raise ValueError('More than two inputs are not accepted. Please check the input format')
+        self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[1], 410)
