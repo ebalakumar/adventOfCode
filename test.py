@@ -1,7 +1,7 @@
 import unittest
 import os.path
 
-from adventCalendar import first_problem, second_problem, third_problem
+from adventCalendar import first_problem, first_problem_part_two, second_problem, third_problem
 
 my_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -10,6 +10,9 @@ class Test1(unittest.TestCase):
 
     def test_first_Problem(self):
         self.assertEqual(first_problem([['14']]), 2)
+
+    def test_first_Problem(self):
+        self.assertEqual(50346, first_problem_part_two([['100756']]))
 
     def test_second_Problem_1(self):
         self.assertEqual(second_problem([1, 0, 0, 0, 99]), [2, 0, 0, 0, 99])
