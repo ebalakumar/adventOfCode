@@ -1,36 +1,33 @@
-import csv
+#!/usr/bin/env python
 import math
 import os.path
 from logging import exception
 
 
+# if statement can be simplified with max (inbuilt fn)
+# math.floor(a / b) is same as a // b
 def calculate_mass(int_mass):
-    result = math.floor((int_mass / 3)) - 2
-    if result < 0:
-        return 0
-    else:
-        return result
+    return max(0, int_mass // 3 - 2)
 
+# Often you don't have to use loops
+# this uses iterator comprehension and builtin sum function
+def first_problem(mass_list):
+    return sum(calculate_mass(int(input_mass)) for input_mass in mass_list)
 
-def first_problem(mass_list) -> object:
-    total_final_mass = 0
-    for mass in mass_list:
-        int_mass = int(mass[0])
-        final_mass = calculate_mass(int_mass)
-        total_final_mass += final_mass
-    return total_final_mass
-
-
+# -> object typehint doesnt really have much use
+# everything is an object
+# isinstance(1, object) -> True
+# isinstance(lambda x: x, object) -> True
+# isinstance("asdf", object) -> True
 def first_problem_part_two(mass_list, total_fuel=0) -> object:
     total_final_masses = []
     for mass in mass_list:
-        int_mass = int(mass[0])
+        int_mass = int(mass)
         total_fuel = 0
         while int_mass > 0:
             int_mass = calculate_mass(int_mass)
             total_fuel += int_mass
         total_final_masses.append(total_fuel)
-    print(total_final_masses)
     return sum(total_final_masses)
 
 
@@ -121,25 +118,28 @@ def find_minimum_step(common_coordinates, red_wire_path, blue_wire_path) -> int:
             total_steps_in_red_wire_for_intersection + total_steps_in_blue_wire_for_intersection)
     return min(wire_intersections_steps)
 
+# this is the equivalent of main method
+# will not be true, if this script is e.g. imported
+# (helpful for unit tests)
+if __name__ == "__main__":
+    num = 1 #int(input('Enter problem number: '))
+    if num == 1:
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path, "input_1.csv")
+        with open(path) as f:
+            masses_1 = f.read().splitlines()
+        print(first_problem(masses_1))
+        print(first_problem_part_two(masses_1))
 
-num = int(input('Enter problem number: '))
-if num == 1:
-    my_path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(my_path, "input_1.csv")
-    with open(path) as f:
-        masses_1 = list(csv.reader(f))
-    print(first_problem(masses_1))
-    print(first_problem_part_two(masses_1))
+    if num == 2:
+        path = os.path.join(my_path, "input_2.txt")
+        with open(path) as f:
+            masses_2 = list(map(int, list(csv.reader(f))[0]))
+        print(second_problem(masses_2))
 
-if num == 2:
-    path = os.path.join(my_path, "input_2.txt")
-    with open(path) as f:
-        masses_2 = list(map(int, list(csv.reader(f))[0]))
-    print(second_problem(masses_2))
-
-if num == 3:
-    path = os.path.join(my_path, "input_3.txt")
-    lines = open(path).read().splitlines()
-    if len(lines) > 2:
-        raise ValueError('More than two inputs are not accepted. Please check the input format')
-    print(third_problem(lines[0].split(','), lines[1].split(',')))
+    if num == 3:
+        path = os.path.join(my_path, "input_3.txt")
+        lines = open(path).read().splitlines()
+        if len(lines) > 2:
+            raise ValueError('More than two inputs are not accepted. Please check the input format')
+        print(third_problem(lines[0].split(','), lines[1].split(',')))
