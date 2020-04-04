@@ -67,7 +67,7 @@ def third_problem(red_wire, blue_wire) -> []:
         arr_common_coordinates.append(abs(int(str(coordinate).split(',')[0])) + abs(int(str(coordinate).split(',')[1])))
     lowest_intersection_steps = find_minimum_step(common_coordinates, red_wire_path, blue_wire_path)
     lowest_intersection = min(arr_common_coordinates)
-    return [lowest_intersection, lowest_intersection_steps]
+    return lowest_intersection, lowest_intersection_steps
 
 
 def update_path(wire, wire_path, x, y):
@@ -122,7 +122,7 @@ def find_minimum_step(common_coordinates, red_wire_path, blue_wire_path) -> int:
 # will not be true, if this script is e.g. imported
 # (helpful for unit tests)
 if __name__ == "__main__":
-    num = 1 #int(input('Enter problem number: '))
+    num = int(input('Enter problem number: '))
     if num == 1:
         my_path = os.path.abspath(os.path.dirname(__file__))
         path = os.path.join(my_path, "input_1.csv")
