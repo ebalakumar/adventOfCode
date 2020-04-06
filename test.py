@@ -7,7 +7,6 @@ from adventCalendar import (first_problem, first_problem_part_two,
 my_path = os.path.abspath(os.path.dirname(__file__))
 
 
-
 class Test1(unittest.TestCase):
 
     def test_first_Problem(self):
@@ -53,4 +52,6 @@ class Test1(unittest.TestCase):
             if len(lines) > 2:
                 raise ValueError('More than two inputs are not accepted. Please check the input format')
             self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[1], 410)
+
+
 unittest.main()

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import csv
 import math
 import os.path
 from logging import exception
@@ -9,10 +10,12 @@ from logging import exception
 def calculate_mass(int_mass):
     return max(0, int_mass // 3 - 2)
 
+
 # Often you don't have to use loops
 # this uses iterator comprehension and builtin sum function
 def first_problem(mass_list):
     return sum(calculate_mass(int(input_mass)) for input_mass in mass_list)
+
 
 # -> object typehint doesnt really have much use
 # everything is an object
@@ -118,13 +121,14 @@ def find_minimum_step(common_coordinates, red_wire_path, blue_wire_path) -> int:
             total_steps_in_red_wire_for_intersection + total_steps_in_blue_wire_for_intersection)
     return min(wire_intersections_steps)
 
+
 # this is the equivalent of main method
 # will not be true, if this script is e.g. imported
 # (helpful for unit tests)
+my_path = os.path.abspath(os.path.dirname(__file__))
 if __name__ == "__main__":
     num = int(input('Enter problem number: '))
     if num == 1:
-        my_path = os.path.abspath(os.path.dirname(__file__))
         path = os.path.join(my_path, "input_1.csv")
         with open(path) as f:
             masses_1 = f.read().splitlines()
