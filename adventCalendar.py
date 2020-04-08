@@ -2,6 +2,7 @@
 import csv
 import math
 import os.path
+import random
 from logging import exception
 
 
@@ -22,7 +23,7 @@ def first_problem(mass_list):
 # isinstance(1, object) -> True
 # isinstance(lambda x: x, object) -> True
 # isinstance("asdf", object) -> True
-def first_problem_part_two(mass_list, total_fuel=0) -> object:
+def first_problem_part_two(mass_list, total_fuel=0):
     total_final_masses = []
     for mass in mass_list:
         int_mass = int(mass)
@@ -34,10 +35,24 @@ def first_problem_part_two(mass_list, total_fuel=0) -> object:
     return sum(total_final_masses)
 
 
-def second_problem(mass_list) -> object:
+def find_verb_noun(mass_list_distinct):
+    output = 0
+    # output == 19690720:
+    while True:
+        noun = random.randint(0, 99)
+        verb = random.randint(0, 99)
+        temp_mass_list = list(mass_list_distinct)
+        if second_problem(temp_mass_list, noun, verb) == 19690720:
+            print('noun: ', noun)
+            print('verb: ', verb)
+            print((100 * noun) + verb)
+            break
+
+
+def second_problem(mass_list, noun, verb) -> object:
     # Replacing position 1 with value 12 and replace position 2 with the value 2
-    mass_list[1] = 12
-    mass_list[2] = 2
+    mass_list[1] = noun
+    mass_list[2] = verb
     i = 0
     while i < len(mass_list):
         opcodes = mass_list[i]
@@ -48,7 +63,7 @@ def second_problem(mass_list) -> object:
         if opcodes == 99:
             break
         i += 4
-    return mass_list
+    return mass_list[0]
 
 
 def third_problem(red_wire, blue_wire) -> []:
@@ -139,7 +154,8 @@ if __name__ == "__main__":
         path = os.path.join(my_path, "input_2.txt")
         with open(path) as f:
             masses_2 = list(map(int, list(csv.reader(f))[0]))
-        print(second_problem(masses_2))
+        print(find_verb_noun(tuple(masses_2)))
+        print(second_problem(masses_2, 12, 2))
 
     if num == 3:
         path = os.path.join(my_path, "input_3.txt")

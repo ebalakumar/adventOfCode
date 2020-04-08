@@ -54,4 +54,4 @@ class Test1(unittest.TestCase):
             self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[1], 410)
 
 
-unittest.main()
+# unittest.main()
