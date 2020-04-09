@@ -141,11 +141,14 @@ def find_minimum_step(common_coordinates, red_wire_path, blue_wire_path) -> int:
 def find_doubles(password):
     passwords = [char for char in password]
     unique_count_password = Counter(passwords).values()
-    flag = False
+    is_double = False
+    is_more_double = False
     for count in unique_count_password:
-        if count >= 2:
-            flag = True
-    return flag
+        if count == 2:
+            is_double = True
+        elif count > 2:
+            is_more_double = True
+    return (is_double and is_more_double) or is_double
 
 
 def is_sequence(password):
