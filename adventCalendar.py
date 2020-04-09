@@ -137,6 +137,33 @@ def find_minimum_step(common_coordinates, red_wire_path, blue_wire_path) -> int:
     return min(wire_intersections_steps)
 
 
+def find_passwords(password_start_range, password_end_range):
+    password_range = range(password_start_range, password_end_range)
+    selected_passwords = []
+    i = 0
+    while i < len(password_range):
+        password = str(password_range[i])
+        flag_same_value = False
+        flag_greater_value = False
+        j = 0
+        while j < len(password)-1:
+            if password[j+1] > password[j]:
+                flag_greater_value = True
+                j += 1
+            elif password[j+1] == password[j]:
+                flag_same_value = True
+                j += 1
+            else:
+                flag_same_value = False
+                flag_greater_value = False
+                break
+        if (flag_same_value and flag_greater_value) or flag_same_value:
+            selected_passwords.append(password)
+        i += 1
+    print(selected_passwords)
+    print(len(selected_passwords))
+
+
 # this is the equivalent of main method
 # will not be true, if this script is e.g. imported
 # (helpful for unit tests)
@@ -163,3 +190,8 @@ if __name__ == "__main__":
         if len(lines) > 2:
             raise ValueError('More than two inputs are not accepted. Please check the input format')
         print(third_problem(lines[0].split(','), lines[1].split(',')))
+
+    if num == 4:
+        password_range_start = 138307
+        password_range_end = 654504
+        find_passwords(password_range_start, password_range_end)
