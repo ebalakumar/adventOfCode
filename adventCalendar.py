@@ -185,6 +185,18 @@ def find_indirect_orbit(satellite_map, initial_satellite, indirect_orbit_count) 
     return indirect_orbit_count
 
 
+def find_satellite_all_orbit_path(satellite_map, initial_satellite, orbit_transfer, satellite_orbit_transfer_data):
+    # satellite_orbit_transfer_data = {}
+    for satellites in satellite_map:
+        if initial_satellite == satellites.split(')')[1]:
+            satellite_orbit_transfer_data[satellites.split(')')[1]] = orbit_transfer
+            orbit_transfer += 1
+            satellite_orbit_transfer_data = find_satellite_all_orbit_path(satellite_map, satellites.split(')')[0],
+                                                                          orbit_transfer, satellite_orbit_transfer_data)
+            break
+    return satellite_orbit_transfer_data
+
+
 def find_direct_orbit(satellite_map, initial_satellite):
     for satellites in satellite_map:
         if initial_satellite == satellites.split(')')[1]:
@@ -214,6 +226,24 @@ def find_satellite_total_orbit_count(satellite_map):
     for satellites in satellites_total_orbits:
         count += satellites_total_orbits[satellites]
     return count
+
+
+def find_min_orbit_transfer(satellite_map, satellite_1, satellite_2):
+    satellite_transfers_1 = {}
+    satellite_transfers_2 = {}
+    total_orbit_transfer = 0
+    for satellites in satellite_map:
+        if satellites.split(')')[1] == satellite_1:
+            you_initial_orbit = satellites.split(')')[0]
+            satellite_transfers_1 = find_satellite_all_orbit_path(satellite_map, you_initial_orbit, 0, {})
+        if satellites.split(')')[1] == satellite_2:
+            you_initial_orbit = satellites.split(')')[0]
+            satellite_transfers_2 = find_satellite_all_orbit_path(satellite_map, you_initial_orbit, 0, {})
+    for satellites in satellite_transfers_1:
+        if satellite_transfers_2.get(satellites) is not None:
+            total_orbit_transfer = satellite_transfers_2.get(satellites) + satellite_transfers_1[satellites]
+            break
+    return total_orbit_transfer
 
 
 # this is the equivalent of main method
@@ -248,7 +278,8 @@ if __name__ == "__main__":
         password_range_end = 654504
         find_passwords(password_range_start, password_range_end)
 
-    if num == 5:
-        path = os.path.join(my_path, "input_5.txt")
+    if num == 6:
+        path = os.path.join(my_path, "input_6.txt")
         lines = open(path).read().splitlines()
-        print(find_satellite_total_orbit_count(lines))
+        print("Satellite's Direct and Indirect orbits :", find_satellite_total_orbit_count(lines))
+        print("Minimum orbit transfer :", find_min_orbit_transfer(lines, "YOU", "SAN"))

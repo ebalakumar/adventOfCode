@@ -2,12 +2,14 @@ import os.path
 import unittest
 
 from adventCalendar import (first_problem, first_problem_part_two,
-                            second_problem, third_problem)
+                            second_problem, third_problem, find_satellite_total_orbit_count, find_min_orbit_transfer)
 
 my_path = os.path.abspath(os.path.dirname(__file__))
 
 
 class Test1(unittest.TestCase):
+
+    # todo exchange the place of parameters in assertEqual function
 
     def test_first_Problem(self):
         self.assertEqual(first_problem(['14']), 2)
@@ -52,6 +54,18 @@ class Test1(unittest.TestCase):
             if len(lines) > 2:
                 raise ValueError('More than two inputs are not accepted. Please check the input format')
             self.assertEqual(third_problem(lines[0].split(','), lines[1].split(','))[1], 410)
+
+    def test_sixth_problem_1(self):
+        path = os.path.join(my_path, "input_6_1.txt")
+        with open(path) as input_file:
+            lines = input_file.read().splitlines()
+            self.assertEqual(42, find_satellite_total_orbit_count(lines))
+
+    def test_sixth_problem_2(self):
+        path = os.path.join(my_path, "input_6_3.txt")
+        with open(path) as input_file:
+            lines = input_file.read().splitlines()
+            self.assertEqual(4, find_min_orbit_transfer(lines, "YOU", "SAN"))
 
 
 # unittest.main()
