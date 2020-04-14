@@ -198,6 +198,7 @@ def find_satellite_all_orbit_path(satellite_map, initial_satellite, orbit_transf
 
 
 def find_direct_orbit(satellite_map, initial_satellite):
+    # todo can we change this to anonymous functions or comprehensions
     for satellites in satellite_map:
         if initial_satellite == satellites.split(')')[1]:
             return satellites.split(')')[0]
