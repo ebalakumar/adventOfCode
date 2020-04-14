@@ -229,6 +229,8 @@ def find_satellite_total_orbit_count(satellite_map):
 
 
 def find_min_orbit_transfer(satellite_map, satellite_1, satellite_2):
+    """The function is used to find the minimum number of transfer
+     satellite1 has to do in order to go the orbit where satellite 2 is orbiting"""
     satellite_transfers_1 = {}
     satellite_transfers_2 = {}
     total_orbit_transfer = 0
