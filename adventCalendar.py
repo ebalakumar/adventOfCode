@@ -176,6 +176,46 @@ def find_passwords(password_start_range, password_end_range):
     print(len(selected_passwords))
 
 
+def find_indirect_orbit(satellite_map, initial_satellite, indirect_orbit_count) -> int:
+    for satellites in satellite_map:
+        if initial_satellite == satellites.split(')')[1]:
+            indirect_orbit_count += 1
+            indirect_orbit_count = find_indirect_orbit(satellite_map, satellites.split(')')[0], indirect_orbit_count)
+            break
+    return indirect_orbit_count
+
+
+def find_direct_orbit(satellite_map, initial_satellite):
+    for satellites in satellite_map:
+        if initial_satellite == satellites.split(')')[1]:
+            return satellites.split(')')[0]
+    return None
+
+
+def find_satellite_total_orbit_count(satellite_map):
+    satellites_total_orbits = {}
+    for satellites in satellite_map:
+        name = satellites.split(')')[1]
+        if name not in satellites_total_orbits:
+            direct_orbit = 1
+            indirect_orbit = find_indirect_orbit(satellite_map, satellites.split(')')[0], 0)
+            satellites_total_orbits[name] = direct_orbit + indirect_orbit
+        name = satellites.split(')')[0]
+        if name not in satellites_total_orbits:
+            calculate_direct_orbit = find_direct_orbit(satellite_map, name)
+            if calculate_direct_orbit is not None:
+                direct_orbit = 1
+                indirect_orbit = find_indirect_orbit(satellite_map, calculate_direct_orbit, 0)
+            else:
+                direct_orbit = 0
+                indirect_orbit = 0
+            satellites_total_orbits[name] = direct_orbit + indirect_orbit
+    count = 0
+    for satellites in satellites_total_orbits:
+        count += satellites_total_orbits[satellites]
+    return count
+
+
 # this is the equivalent of main method
 # will not be true, if this script is e.g. imported
 # (helpful for unit tests)
@@ -207,3 +247,8 @@ if __name__ == "__main__":
         password_range_start = 138307
         password_range_end = 654504
         find_passwords(password_range_start, password_range_end)
+
+    if num == 5:
+        path = os.path.join(my_path, "input_5.txt")
+        lines = open(path).read().splitlines()
+        print(find_satellite_total_orbit_count(lines))
