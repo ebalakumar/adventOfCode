@@ -197,8 +197,8 @@ def find_satellite_all_orbit_path(satellite_map, initial_satellite, orbit_transf
     return satellite_orbit_transfer_data
 
 
+# todo can we change this to anonymous functions or comprehensions
 def find_direct_orbit(satellite_map, initial_satellite):
-    # todo can we change this to anonymous functions or comprehensions
     for satellites in satellite_map:
         if initial_satellite == satellites.split(')')[1]:
             return satellites.split(')')[0]
@@ -271,7 +271,8 @@ if __name__ == "__main__":
 
     if num == 3:
         path = os.path.join(my_path, "input_3.txt")
-        lines = open(path).read().splitlines()
+        with open(path) as f:
+            lines = f.read().splitlines()
         if len(lines) > 2:
             raise ValueError('More than two inputs are not accepted. Please check the input format')
         print(third_problem(lines[0].split(','), lines[1].split(',')))
@@ -283,6 +284,7 @@ if __name__ == "__main__":
 
     if num == 6:
         path = os.path.join(my_path, "input_6.txt")
-        lines = open(path).read().splitlines()
+        with open(path) as f:
+            lines = f.read().splitlines()
         print("Satellite's Direct and Indirect orbits :", find_satellite_total_orbit_count(lines))
         print("Minimum orbit transfer :", find_min_orbit_transfer(lines, "YOU", "SAN"))
