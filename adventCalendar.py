@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 import csv
-import math
 import os.path
 import random
 from collections import Counter
-from logging import exception
 
 
 # if statement can be simplified with max (inbuilt fn)
 # math.floor(a / b) is same as a // b
+from sunny_with_chance_of_asteroids import fifth_problem
+
+
 def calculate_mass(int_mass):
     return max(0, int_mass // 3 - 2)
 
@@ -24,7 +25,7 @@ def first_problem(mass_list):
 # isinstance(1, object) -> True
 # isinstance(lambda x: x, object) -> True
 # isinstance("asdf", object) -> True
-def first_problem_part_two(mass_list, total_fuel=0):
+def first_problem_part_two(mass_list, total_fuel=0):  # todo adding try catch block
     total_final_masses = []
     for mass in mass_list:
         int_mass = int(mass)
@@ -38,16 +39,12 @@ def first_problem_part_two(mass_list, total_fuel=0):
 
 def find_verb_noun(mass_list_distinct):
     output = 0
-    # output == 19690720:
     while True:
         noun = random.randint(0, 99)
         verb = random.randint(0, 99)
         temp_mass_list = list(mass_list_distinct)
         if second_problem(temp_mass_list, noun, verb) == 19690720:
-            print('noun: ', noun)
-            print('verb: ', verb)
-            print((100 * noun) + verb)
-            break
+            return noun, verb, ((100 * noun) + verb)
 
 
 def second_problem(mass_list, noun, verb) -> object:
@@ -252,7 +249,7 @@ def find_min_orbit_transfer(satellite_map, satellite_1, satellite_2):
 # this is the equivalent of main method
 # will not be true, if this script is e.g. imported
 # (helpful for unit tests)
-my_path = os.path.abspath(os.path.dirname(__file__))
+my_path = os.path.abspath(os.path.dirname(__file__))  # todo format the output
 if __name__ == "__main__":
     num = int(input('Enter problem number: '))
     if num == 1:
@@ -266,7 +263,10 @@ if __name__ == "__main__":
         path = os.path.join(my_path, "input_2.txt")
         with open(path) as f:
             masses_2 = list(map(int, list(csv.reader(f))[0]))
-        print(find_verb_noun(tuple(masses_2)))
+        noun, verb, result = find_verb_noun(tuple(masses_2))
+        print("noun :", noun)
+        print("verb :", verb)
+        print("100 * noun + verb :", result)
         print(second_problem(masses_2, 12, 2))
 
     if num == 3:
@@ -288,3 +288,10 @@ if __name__ == "__main__":
             lines = f.read().splitlines()
         print("Satellite's Direct and Indirect orbits :", find_satellite_total_orbit_count(lines))
         print("Minimum orbit transfer :", find_min_orbit_transfer(lines, "YOU", "SAN"))
+
+    if num == 5:
+        path = os.path.join(my_path, "input_5.txt")
+        with open(path) as f:
+            lines = list(map(int, list(csv.reader(f))[0]))  # todo find alternate implementation as we are not reading csv
+        print(fifth_problem(lines))
+
