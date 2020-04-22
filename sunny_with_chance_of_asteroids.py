@@ -25,65 +25,65 @@ def calc_param_mode(i, mass_list, p1, p2, p3):
     return output, param1, param2
 
 
-def op_add(mass_list, op_code, p1, p2, p3, i):
+def op_add(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, p2, p3)
     mass_list[output] = param1 + param2
-    return i + 4
+    return i + 4, 0
 
 
-def op_mul(mass_list, op_code, p1, p2, p3, i):
+def op_mul(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, p2, p3)
     mass_list[output] = param1 * param2
-    return i + 4
+    return i + 4, 0
 
 
-def op_write(mass_list, op_code, p1, p2, p3, i):
-    mass_list[mass_list[i + 1]] = int(input("Enter: "))
-    return i + 2
+def op_write(mass_list, op_code, p1, p2, p3, i, input_value):
+    mass_list[mass_list[i + 1]] = input_value
+    return i + 2, 0
 
 
-def op_show(mass_list, op_code, p1, p2, p3, i):
+def op_show(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, None, None)
     print(param1)
-    return i + 2
+    return i + 2, param1
 
 
-def op_jump_true(mass_list, op_code, p1, p2, p3, i):
+def op_jump_true(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, p2, p3)
     if param1 != 0:
-        return param2
+        return param2, 0
     else:
-        return i + 3
+        return i + 3, 0
 
 
-def op_jump_false(mass_list, op_code, p1, p2, p3, i):
+def op_jump_false(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, p2, p3)
     if param1 == 0:
-        return param2
+        return param2, 0
     else:
-        return i + 3
+        return i + 3, 0
 
 
-def op_less_than(mass_list, op_code, p1, p2, p3, i):
+def op_less_than(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, p2, p3)
     if param1 < param2:
         mass_list[output] = 1
     else:
         mass_list[output] = 0
-    return i + 4
+    return i + 4, 0
 
 
-def op_equals(mass_list, op_code, p1, p2, p3, i):
+def op_equals(mass_list, op_code, p1, p2, p3, i, input_value):
     output, param1, param2 = calc_param_mode(i, mass_list, p1, p2, p3)
     if param1 == param2:
         mass_list[output] = 1
     else:
         mass_list[output] = 0
-    return i + 4
+    return i + 4, 0
 
 
-def op_quit(mass_list, op_code, p1, p2, p3, i):
-    return -1
+def op_quit(mass_list, op_code, p1, p2, p3, i, input_value):
+    return -1, 0
 
 
 op_codes = {
@@ -118,12 +118,11 @@ def fifth_problem(mass_list):
     i = 0
     while i != -1:
         op_code, p1, p2, p3 = calculate_opcodes_parameter_modes(mass_list[i])
-        i = op_codes[op_code](mass_list, op_code, p1, p2, p3, i)
+        if op_code == 3:
+            input_signal = int(input("Enter: "))  # todo: Not working when we have to enter input more than once
+        i = op_codes[op_code](mass_list, op_code, p1, p2, p3, i, input_signal)[0]
     return mass_list
 
 
 if __name__ == '__main__':
-    fifth_problem([3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31,
-                   1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,
-                   999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99])
-    # fifth_problem([3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1])
+    print(fifth_problem([3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]))

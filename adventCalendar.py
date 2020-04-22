@@ -7,6 +7,7 @@ from collections import Counter
 
 # if statement can be simplified with max (inbuilt fn)
 # math.floor(a / b) is same as a // b
+from amplification_circuit import calculate_thruster_signal
 from sunny_with_chance_of_asteroids import fifth_problem
 
 
@@ -282,6 +283,12 @@ if __name__ == "__main__":
         password_range_end = 654504
         find_passwords(password_range_start, password_range_end)
 
+    if num == 5:
+        path = os.path.join(my_path, "input_5.txt")
+        with open(path) as f:
+            lines = list(map(int, list(csv.reader(f))[0]))  # todo find alternate implementation as we are not reading csv
+        print(fifth_problem(lines))
+
     if num == 6:
         path = os.path.join(my_path, "input_6.txt")
         with open(path) as f:
@@ -289,9 +296,9 @@ if __name__ == "__main__":
         print("Satellite's Direct and Indirect orbits :", find_satellite_total_orbit_count(lines))
         print("Minimum orbit transfer :", find_min_orbit_transfer(lines, "YOU", "SAN"))
 
-    if num == 5:
-        path = os.path.join(my_path, "input_5.txt")
+    if num == 7:
+        path = os.path.join(my_path, "input_7.txt")
         with open(path) as f:
             lines = list(map(int, list(csv.reader(f))[0]))  # todo find alternate implementation as we are not reading csv
-        print(fifth_problem(lines))
+        calculate_thruster_signal(lines)
 
