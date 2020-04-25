@@ -11,7 +11,7 @@ def calculate_bios_password(wide, tall, encoded_data):
         total_layers.append((find_numbers(individual_layer[:], "0"), individual_layer[:]))
     return (find_numbers(min(total_layers)[1], "1") * find_numbers(min(total_layers)[1],
                                                                    "2")), ''.join(
-        decode_message(total_layers, (wide * tall)))
+        decode_message(total_layers, wide, tall))
 
 
 def find_numbers(layers, num):
@@ -22,10 +22,10 @@ def find_numbers(layers, num):
     return count
 
 
-def decode_message(layers, total_len):
+def decode_message(layers, wide, tall):
     final_layer = []
     i = 0
-    while i < total_len:
+    while i < (wide * tall):
         color_1 = None
         for individual_layer in layers:
             # if color_1 is None:
@@ -39,7 +39,19 @@ def decode_message(layers, total_len):
                 color_1 = (individual_layer[1])[i]
         final_layer.append(color_1)
         i += 1
+    print_colors(final_layer, wide, tall)
     return final_layer
+
+
+def print_colors(colors, wide, tall):
+    k = 0
+    i = 0
+    _wide = wide
+    while k < len(colors):
+        print(''.join(colors[i:_wide]).replace('0', ' '))
+        i = _wide
+        _wide += wide
+        k += wide
 
 
 if __name__ == "__main__":
