@@ -8,6 +8,7 @@ from collections import Counter
 # if statement can be simplified with max (inbuilt fn)
 # math.floor(a / b) is same as a // b
 from amplification_circuit import calculate_thruster_signal
+from sensor_boost import ninth_problem
 from space_image_format import calculate_bios_password
 from sunny_with_chance_of_asteroids import fifth_problem
 
@@ -308,6 +309,12 @@ if __name__ == "__main__":
         with open(path) as f:
             input_8 = list(csv.reader(f))[0]
         print(calculate_bios_password(25, 6, input_8[0]))
+
+    if num == 9:
+        path = os.path.join(my_path, "input_9.txt")
+        with open(path) as f:
+            lines = list(map(int, list(csv.reader(f))[0]))
+        ninth_problem(lines)
 
 
 
