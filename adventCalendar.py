@@ -316,6 +316,12 @@ if __name__ == "__main__":
             lines = list(map(int, list(csv.reader(f))[0]))
         ninth_problem(lines)
 
+    if num == 10:
+        path = os.path.join(my_path, "input_10.txt")
+        with open(path) as f:
+            lines = list(map(list, f.read().splitlines()))
+        print(lines)
+
 
 
 
