@@ -20,9 +20,7 @@ def find_position_meteor_station(asteroid_map):  # todo: refactoring needed
                     possible_meteor_stations[str(possible_meteor_station)] = possible_meteor_stations[
                                                                                  str(possible_meteor_station)] + 1
 
-    print(possible_meteor_stations)
-    print(max(possible_meteor_stations, key=possible_meteor_stations.get))
-    print(max(possible_meteor_stations.values()))
+    print(max(possible_meteor_stations, key=possible_meteor_stations.get), max(possible_meteor_stations.values()))
 
 
 def find_asteroid_positions(asteroid_map, asteroid_positions):
@@ -47,11 +45,13 @@ def find_in_between_locations(p1, p2):
         x2, y2 = p2[0], p2[1]
 
     m = (y2 - y1) / (x2 - x1)
-    b = ((x2 * y1) - (x1 * y2)) / (x2 - x1)
+    b = y1 - (m * x1)
     for x in list(range(x1, x2))[1:]:
         y = (m * x) + b
         if y.is_integer():
             y = round(y)
+        else:
+            y = round(y, 2)
         in_between_locations.append([x, y])
     return in_between_locations
 
