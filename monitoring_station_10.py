@@ -1,13 +1,21 @@
 import os
-from adventCalendar import my_path
+
+my_path = os.path.abspath(os.path.dirname(__file__))
+
+
+class Asteroid:
+    def __init__(self, position, max_asteroid_detected):
+        self._position = position
+        self._max_asteroid_detected = max_asteroid_detected
 
 
 def find_position_meteor_station(asteroid_map):  # todo: refactoring needed
+    asteroids = []
     asteroid_positions = []
     possible_meteor_stations = {}
     find_asteroid_positions(asteroid_map, asteroid_positions)
     for possible_meteor_station in asteroid_positions:
-        possible_meteor_stations[str(possible_meteor_station)] = find_asteroids_neighbour_position_in_same_row(
+        asteroid_detected_count = find_asteroids_neighbour_position_in_same_row(
             possible_meteor_station, [var for var in asteroid_positions if var[0] == possible_meteor_station[0]],
             len(asteroid_map[0]))
         for asteroid_position in asteroid_positions:
@@ -17,10 +25,12 @@ def find_position_meteor_station(asteroid_map):  # todo: refactoring needed
                     if positions_in_between_asteroid in asteroid_positions:
                         break
                 else:
-                    possible_meteor_stations[str(possible_meteor_station)] = possible_meteor_stations[
-                                                                                 str(possible_meteor_station)] + 1
-
-    print(max(possible_meteor_stations, key=possible_meteor_stations.get), max(possible_meteor_stations.values()))
+                    asteroid_detected_count = asteroid_detected_count + 1
+        asteroids.append(Asteroid(possible_meteor_station, asteroid_detected_count))
+    asteroid = list(var for var in asteroids if var._max_asteroid_detected == max(var._max_asteroid_detected for var in asteroids))[0]
+    print(asteroid._position, asteroid._max_asteroid_detected)
+    # shoot_asteroids(asteroid_positions, meteor_station)
+    return
 
 
 def find_asteroid_positions(asteroid_map, asteroid_positions):
@@ -81,8 +91,15 @@ def find_asteroids_neighbour_position_in_same_row(asteroid_position, asteroid_po
     return left_count + right_count
 
 
+def shoot_asteroids(asteroid_positions, meteor_station_location):
+    asteroid_locations_in_laser_view = find_in_between_locations(meteor_station_location,
+                                                                 [0, meteor_station_location[1]])
+    print(asteroid_locations_in_laser_view)
+    pass
+
+
 if __name__ == "__main__":
-    path = os.path.join(my_path, "input_10_test_1.txt")
+    path = os.path.join(my_path, "input_10_1.txt")
     with open(path) as f:
         lines = list(map(list, f.read().splitlines()))
     find_position_meteor_station(lines)
